@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Our Journey 🩵</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui;
+            background: #121921;
+            color: white;
+            text-align: center;
+        }
+
+        h1 { 
+            margin-top: 30px; 
+        }
+
+        .chapter {
+            margin: 50px auto;
+            max-width: 800px;
+        }
+
+        .chapter img {
+            width: 500px;       /* fixed width */
+            height: 500px;      /* fixed height to make it square */
+            object-fit: cover;  /* ensures the image fills the square without stretching */
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        /* Cinematic Button - Smaller Version */
+.btn {
+    display: inline-block;
+    margin: 50px auto 100px auto; /* keep extra space below */
+    padding: 10px 30px;           /* reduced padding for smaller size */
+    background: #1a1a1a;
+    border: 2px solid #ff0080;    /* slightly smaller border */
+    border-radius: 12px;
+    color: #ff0080;
+    font-size: 12px;               /* half of original 24px */
+    font-weight: 900;
+    letter-spacing: 1px;           /* half of original spacing */
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Shimmer effect */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        rgba(255,255,255,0.2),
+        rgba(255,255,255,0.6),
+        rgba(255,255,255,0.2)
+    );
+    transform: skewX(-25deg);
+    transition: all 0.5s ease-in-out;
+}
+
+.btn:hover::after {
+    left: 200%; /* shimmer moves across button */
+}
+
+.btn:hover {
+    color: white;
+    border-color: #ff6ec7;
+    box-shadow: 0 0 10px #ff0080, 0 0 20px #7928ca, 0 0 30px #ff6ec7; /* reduced glow */
+    background: linear-gradient(45deg, #1a1a1a, #111111);
+}
+    </style>
+</head>
+<body>
+
+<h1>Our Journey 🩵</h1>
+
+<div class="chapter">
+    <h2>Chapter 1 – First Meeting ✨</h2>
+    <p>The day our eyes met, my world changed forever...</p>
+    <img src="images/1.jpeg">
+</div>
+
+<div class="chapter">
+    <h2>Chapter 2 – Falling in Love 💖</h2>
+    <p>Every smile, every message, every moment became special...</p>
+    <img src="images/2.jpeg">
+</div>
+
+<div class="chapter">
+    <h2>Chapter 3 – Forever Together 🌹</h2>
+    <p>This is just the beginning of our forever journey...</p>
+    <img src="images/3.jpeg">
+</div>
+
+<div class="chapter">
+    <h2>Chapter 4 – Adventures Await ✈️</h2>
+    <p>Every day brings a new adventure we’ll cherish together.</p>
+    <img src="images/4.jpeg">
+</div>
+
+<div class="chapter">
+    <h2>Chapter 5 – Memories in the Making 📸</h2>
+    <p>Capturing every moment, big or small, that fills our hearts with joy.</p>
+    <img src="images/5.jpeg">
+</div>
+
+<div class="chapter">
+    <h2>Chapter 6 – Dreams & Promises 💫</h2>
+    <p>Looking ahead, hand in hand, toward all the dreams we share.</p>
+    <img src="images/6.jpeg">
+</div>
+
+<!-- Cinematic Button -->
+<button class="btn" onclick="location.href='memories.html'">
+Continue Our Journey ➜
+</button>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surprise!</title>
+<style>
+:root {
+    --bg-color: #fce4ec;
+    --env-color: #d4a373; 
+    --env-dark: #bc8a5f;
+    --heart-red: #e91e63;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Georgia', serif;
+    overflow: hidden;
+}
+
+h1 {
+    color: #ad1457;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Question Buttons */
+.btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.3s;
+}
+
+.yes-btn {
+    background: #ff4d6d;
+    color: white;
+}
+
+.no-btn {
+    background: #999;
+    color: white;
+    position: relative;
+}
+
+/* Envelope */
+.envelope-wrapper {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    background-color: var(--env-dark);
+    cursor: pointer;
+}
+
+.envelope-front {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 150px 110px 150px;
+    border-color: transparent transparent var(--env-color) transparent;
+    z-index: 3;
+}
+
+.envelope-sides {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 100px 150px 100px 0;
+    border-color: transparent var(--env-dark) transparent transparent;
+    z-index: 2;
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 110px 150px 0 150px;
+    border-color: var(--env-dark) transparent transparent transparent;
+    transform-origin: top;
+    transition: transform 0.5s ease;
+    z-index: 4;
+}
+
+.letter {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    width: 260px;
+    height: 180px;
+    background: white;
+    z-index: 1;
+    transition: transform 0.8s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.open .flap {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.open .letter {
+    transform: translateY(-160px);
+    z-index: 4;
+}
+
+.gift-icon { font-size: 30px; margin-bottom: 5px; }
+.title { color: #d63384; font-weight: bold; font-size: 20px; margin: 0; }
+.msg { font-size: 13px; color: #555; margin: 10px 0; }
+.btn-link {
+    background: #ff4d6d;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Falling */
+.falling {
+    position: absolute;
+    top: -50px;
+    font-size: 24px;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* Fire */
+.fire {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: orange;
+    box-shadow: 0 0 15px orange, 0 0 30px red;
+    animation: flicker 0.3s infinite alternate;
+}
+
+@keyframes flicker {
+    0% { transform: translateY(0px) scale(1); opacity: 0.8; }
+    50% { transform: translateY(-5px) scale(1.2); opacity: 1; }
+    100% { transform: translateY(0px) scale(1); opacity: 0.8; }
+}
+</style>
+</head>
+<body>
+
+<h1 id="text">Will you be my Valentine? 💖</h1>
+
+<div>
+    <button class="btn yes-btn" onclick="openSurprise()">Yes ❤️</button>
+    <button class="btn no-btn" id="noBtn" onclick="moveNo()">No 😅</button>
+</div>
+
+<div class="envelope-wrapper" id="envelope">
+    <div class="flap"></div>
+    <div class="envelope-front"></div>
+    <div class="envelope-sides"></div>
+
+    <div class="letter">
+        <div class="gift-icon">🎁</div>
+        <p class="title">Surprise!</p>
+        <p class="msg">"You are the best gift I could ever ask for."</p>
+        <a href="foryou.html" class="btn-link">One last thing... ❤️</a>
+    </div>
+</div>
+
+<script>
+function moveNo() {
+    const noBtn = document.getElementById("noBtn");
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 200 - 100;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+function openSurprise() {
+    document.getElementById('envelope').classList.add('open');
+    document.getElementById('text').style.opacity = '0';
+    launchRosesAndGifts();
+    launchFire();
+}
+
+function launchRosesAndGifts() {
+    const symbols = [ '🌹', '🌺', '💝', '🎁', '❤️', '💖', '✨', '🎀', '💐', '💌', '🧧', '🎉', '🥰', '🌸'];
+
+    setInterval(() => {
+        const span = document.createElement('span');
+        span.className = 'falling';
+        span.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+        span.style.left = Math.random() * 100 + 'vw';
+        span.style.animationDuration = 3 + Math.random() * 3 + 's';
+        span.style.fontSize = 20 + Math.random() * 20 + 'px';
+        document.body.appendChild(span);
+        setTimeout(() => span.remove(), 6000);
+    }, 200);
+}
+
+function launchFire() {
+    for (let i = 0; i < 30; i++) {
+        const fire = document.createElement('div');
+        fire.className = 'fire';
+        fire.style.left = (140 + Math.random()*20) + 'px';
+        fire.style.top = (140 + Math.random()*20) + 'px';
+        fire.style.animationDuration = (0.2 + Math.random()*0.3) + 's';
+        document.body.appendChild(fire);
+        setTimeout(() => fire.remove(), 2000);
+    }
+}
+</script>
+
+</body>
+</html>

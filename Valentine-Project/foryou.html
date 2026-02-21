@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For You Pottu 💌</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e1e2f, #4b1055);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding-top: 50px;
+            overflow-y: auto;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #ffb6e6;
+            text-shadow: 0 0 10px hotpink,
+                         0 0 20px #ff69b4,
+                         0 0 30px rgba(255,105,180,0.5);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            height: 400px;
+            background: rgba(0,0,0,0.6);
+            border: 2px solid hotpink;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 0 30px hotpink, inset 0 0 15px #ff69b4;
+            margin-bottom: 20px;
+        }
+
+        .letter-box {
+            width: 100%;
+            height: 100%;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            line-height: 2rem;
+            white-space: pre-wrap;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: center;
+            overflow-y: auto;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .letter-box::-webkit-scrollbar {
+            width: 8px;
+        }
+        .letter-box::-webkit-scrollbar-thumb {
+            background: hotpink;
+            border-radius: 10px;
+        }
+        .letter-box::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.6rem;
+            background: hotpink;
+            margin-left: 2px;
+            animation: blink 1s infinite;
+            vertical-align: bottom;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0; }
+        }
+
+        .exit-btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, hotpink, #ff69b4);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255,105,180,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .exit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,105,180,0.7);
+        }
+
+        .outside-message {
+            margin-top: 15px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            margin-bottom: 50px;
+        }
+
+        .outside-message.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Music -->
+    <audio id="bg-music" autoplay loop>
+        <source src="images/song.mpeg" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <h1>To My Love Just For You 💕</h1>
+
+    <div class="container">
+        <div class="letter-box" id="letter-box">
+            <div id="text"></div>
+        </div>
+    </div>
+
+    <div class="outside-message" id="outsideMessage">
+        Happy Valentine's Day ❤️<br>
+        Made with love, just for you
+    </div>
+
+    <button class="exit-btn" id="exit-btn">Exit</button>
+
+<script>
+    const message = 
+`My Dearest Ammu 🩵,
+
+From the first day,
+you became my happiness.
+
+Every smile of yours
+lights up my entire world.
+
+This journey we shared
+is only the beginning...
+
+I promise to love you,
+today, tomorrow,
+and forever. ❤️
+
+You are my safe place,
+my laughter in the silence,
+my calm in every storm.
+
+With every heartbeat,
+I feel more connected to you,
+more grateful for your love.
+
+The little things you do,
+your gentle touch,
+the way you say my name —
+they stay with me,
+even when we are apart.
+
+I dream of our future together,
+building memories,
+laughing endlessly,
+and holding each other
+through everything life brings.
+
+You are not just my love,
+you are my inspiration,
+my light,
+my home. 🩵
+
+No words could ever capture
+how much you mean to me,
+but I will spend my life
+showing you,
+every single day,
+that my heart belongs to you
+and only you. ❤️
+
+I LOVE YOU POTTU🩵,
+more than words can say,
+and I will love you
+until the end of time.
+Forever yours,
+Ammu's Pottu ❤️`;
+
+    let i = 0;
+    const textElement = document.getElementById("text");
+    const box = document.getElementById("letter-box");
+    const outsideMessage = document.getElementById("outsideMessage");
+    const bgMusic = document.getElementById("bg-music");
+
+    // Start typing after small delay
+    setTimeout(typeLetter, 800);
+
+    const cursor = document.createElement("span");
+    cursor.className = "cursor";
+    textElement.appendChild(cursor);
+
+    function typeLetter() {
+        // start music if not already playing
+        if (i === 0) {
+            bgMusic.play().catch(e => console.log('Autoplay blocked:', e));
+        }
+
+        if (i < message.length) {
+            cursor.remove();
+            textElement.innerHTML += message.charAt(i);
+            textElement.appendChild(cursor);
+            i++;
+            box.scrollTop = box.scrollHeight;
+            setTimeout(typeLetter, 40);
+        } else {
+            outsideMessage.classList.add("show");
+        }
+    }
+
+    const exitBtn = document.getElementById("exit-btn");
+    exitBtn.addEventListener("click", () => {
+        window.location.href = "index.html";
+    });
+</script>
+
+</body>
+</html>
